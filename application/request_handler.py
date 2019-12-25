@@ -1,8 +1,6 @@
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from . import linebot, webhook
-from .events import MyBooks, QueryBooks, RenewBooks, RentReminder, ReserveBook
-
-events = [ MyBooks, QueryBooks, RenewBooks, RentReminder, ReserveBook ]
+from .events import eventlist as events
 
 @webhook.add(MessageEvent, message=TextMessage)
 def handle_message(event):

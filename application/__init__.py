@@ -25,6 +25,7 @@ def create_app():
     with app.app_context():
 
         # Create tables for our models
+        from .models import users
         db.create_all()
 
         # trigger request_handler
