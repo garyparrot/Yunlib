@@ -1,8 +1,21 @@
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from . import linebot, webhook
+from .events import MyBooks, QueryBooks, RenewBooks, RentReminder, ReserveBook
+
+events = [ MyBooks, QueryBooks, RenewBooks, RentReminder, ReserveBook ]
 
 @webhook.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
     if event.reply_token == "00000000000000000000000000000000":
         return
-    linebot.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+
+    for e in events:
+        if e.checkEvent(event):
+            response = e.handleEvent(event)
+            linebot.reply_message(event.reply_token, response)
+            return 
+
+    linebot.reply_message(event.reply_token, TextSendMessage(text="Sorry, I don't understand your request."))
+
+    return 
