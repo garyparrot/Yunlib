@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from ParseError import ParseError
+from .ParseError import ParseError
 import requests
 
 def auth(username, password, site = "http://www.libwebpac.yuntech.edu.tw/Webpac2/Person.dll"):
@@ -61,8 +61,8 @@ def retrieve_nav_url(response):
 
     navigator = parser.find("frame", { "name": "nav" })
 
-    if not navigator.has_attr('src') or navigator['src'].find('?') == -1:
-        raise PraseError("Unable to retrieve transkey ", response.text) 
+    if not navigator or not navigator.has_attr('src') or navigator['src'].find('?') == -1:
+        raise ParseError("Unable to retrieve transkey ", response.text) 
 
     return navigator['src'][navigator['src'].find('/NAV?')+1:]
 

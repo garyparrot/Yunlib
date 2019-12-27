@@ -19,18 +19,15 @@ class style:
         self.title              = compose( bold, cgreen, text2 )
         self.section_title      = compose( bold, margin1, text5, flex7 )
         self.section_subtitle   = compose( wrap, cgrey1, text0, align_end, gbottom, flex3 )
-        self.emptyhint          = compose( cgrey2, margin5, text2, align_center )
-        self.bookname_style     = compose( flex7, text2, cgrey3 )
-        self.bookduedate_style  = compose( flex3, text2, cblack, align_end )
+        self.emptyhint          = compose( cgrey2, margin5, text1, align_center )
+        self.bookname_style     = compose( flex7, text1, cgrey2 )
+        self.bookduedate_style  = compose( flex3, text1, cblack, align_end )
 
 class MyBooklistRender:
 
-    def __init__(self, books = list(), config = config(), style = style()):
+    def __init__(self, config = config(), style = style()):
         self.config = config
         self.style = style
-
-        if books:
-            self.config.books = books
 
     def render(self):
         return BubbleContainer(

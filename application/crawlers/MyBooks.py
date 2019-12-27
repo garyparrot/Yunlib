@@ -1,11 +1,11 @@
 import pandas as pd
 
 from flask import current_app as app
-from ParseError import ParseError
-from Authentication import auth
+from .ParseError import ParseError
+from .Authentication import auth
 from bs4 import BeautifulSoup
 
-from models.BorrowedBook import BorrowedBook
+from .models.BorrowedBook import BorrowedBook
 
 def crawler(username, password, site = "http://www.libwebpac.yuntech.edu.tw/Webpac2/Person.dll"):
 
