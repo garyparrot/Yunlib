@@ -1,4 +1,4 @@
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, PostbackEvent
 from . import linebot, webhook
 from .events import eventlist as events
 
@@ -17,3 +17,12 @@ def handle_message(event):
     linebot.reply_message(event.reply_token, TextSendMessage(text="Sorry, I don't understand your request."))
 
     return 
+
+@webhook.add(PostbackEvent)
+def handle_postback(event):
+
+    for e in events:
+        if hasattr(e, "checkPostback") and e.checkPostback(event):
+            response = e.handlePostback(event)
+            linebot.reply_message(event.reply_token, response)
+            return

@@ -10,3 +10,5 @@ class Config:
 
     LINEBOT_ACCESS_TOKEN = os.environ.get('linebot_access_token')
     LINEBOT_SECRET = os.environ.get('linebot_secret')
+
+    PAGE_SIZE = int(os.environ.get('page_size'))
