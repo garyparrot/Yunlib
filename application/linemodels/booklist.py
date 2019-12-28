@@ -73,8 +73,9 @@ class MyBooklistRender:
 
     """ render book itself """
     def renderBook(self, book):
+        twDate = lambda time : f"{time.year - 1911}/{time.month}/{time.day}"
         bookname = TextComponent(text = book.bookname, **self.style.bookname_style)
-        duedate  = TextComponent(text = book.duedate , **self.style.bookduedate_style)
+        duedate  = TextComponent(text = twDate(book.duedate_time) , **self.style.bookduedate_style)
 
         return BoxComponent( contents = [bookname, duedate], layout = "horizontal")
 
