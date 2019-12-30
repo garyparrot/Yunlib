@@ -31,6 +31,10 @@ def create_app():
         # trigger request_handler
         from . import request_handler
 
+        # scheduler
+        from . import scheduler
+        scheduler.startScheduler()
+
         # blueprints
         from .routes import auth
         from .routes import signup

@@ -26,5 +26,8 @@ class BorrowedBook:
         self.reservation_counter    = row[5]
         self.note                   = row[6]
 
+    def due(self, time):
+        return self.duedate_time < time
+
     def __repr__(self):
         return f"<Book \'{self.bookname[:10]}{'...' if len(self.bookname) > 10 else ''}\'>"

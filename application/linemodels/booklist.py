@@ -1,14 +1,19 @@
 from linebot.models import *
 from .styles import *
+from datetime import datetime, timedelta
 
 class config:
 
-    def __init__(self, books = list(), lfooter = "footer", rfooter = "footer", title = "Title", emptyhint = "Nothing"):
+    def __init__(self, books = list(), lfooter = "footer", rfooter = "footer", title = "Title", emptyhint = "Nothing", time = datetime.now, wtime = datetime.now):
         self.lfooter = lfooter
         self.rfooter = rfooter
         self.books   = books
         self.title   = title
         self.emptyhint = emptyhint
+        if callable(time): time = time()
+        self.thetime = time                   # the moment of this render process, if any book is due. render might apply other style scheme
+        if callable(wtime): wtime = wtime()
+        self.the_warning_time = wtime         # the moment of this render process, if any book is about to due. render might apply other style scheme
 
 class style:
     
@@ -22,6 +27,8 @@ class style:
         self.emptyhint          = compose( cgrey2, margin5, text1, align_center )
         self.bookname_style     = compose( flex7, text1, cgrey2 )
         self.bookduedate_style  = compose( flex3, text1, cblack, align_end )
+        self.bookduedate_style1 = compose( flex3, text1, cred, align_end )
+        self.bookduedate_style2 = compose( flex3, text1, cred, align_end )
 
 class MyBooklistRender:
 
@@ -75,7 +82,12 @@ class MyBooklistRender:
     def renderBook(self, book):
         twDate = lambda time : f"{time.year - 1911}/{time.month}/{time.day}"
         bookname = TextComponent(text = book.bookname, **self.style.bookname_style)
-        duedate  = TextComponent(text = twDate(book.duedate_time) , **self.style.bookduedate_style)
+        if book.due(self.config.thetime):
+            duedate  = TextComponent(text = twDate(book.duedate_time) , **self.style.bookduedate2_style)
+        elif book.due(self.config.the_warning_time):
+            duedate  = TextComponent(text = twDate(book.duedate_time) , **self.style.bookduedate1_style)
+        else:
+            duedate  = TextComponent(text = twDate(book.duedate_time) , **self.style.bookduedate_style)
 
         return BoxComponent( contents = [bookname, duedate], layout = "horizontal")
 

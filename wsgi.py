@@ -13,7 +13,8 @@ if __name__ == "__main__":
             "ssl_context": ( 
                 os.environ.get('certification_pam'),
                 os.environ.get('certification_key'),
-            )
+            ),
+            "use_reloader": False
     }
 
     app.run(**setting)
