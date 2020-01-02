@@ -219,7 +219,7 @@ def create_booklist(table, result_index, record_amount, title, command):
               { "type": "text", "text": "出版年", "align": "end", "weight": "bold" },
               { "type": "separator" },
               { "type": "separator", "margin": "md", "color": "#ffffff" },
-              *[ {"type": "text", "text": text, "align": "end" } for text in pubyear ]
+              *[ {"type": "text", "text": text.split('.',1)[0], "align": "end" } for text in pubyear ]
             ],
             "flex": 0,
             "margin": "md"
