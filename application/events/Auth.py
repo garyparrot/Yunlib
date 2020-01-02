@@ -30,4 +30,7 @@ def handleEvent(args):
     user.verify_due = None
     db.session.commit()
 
+    # link rich menu for user
+    user.linkRichMenu()
+
     return TextSendMessage(text="Successful!")

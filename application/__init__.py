@@ -1,6 +1,7 @@
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from linebot import LineBotApi, WebhookHandler
+from .linemodels import RichMenu
 
 db = SQLAlchemy()
 
@@ -40,5 +41,8 @@ def create_app():
         from .routes import signup
         app.register_blueprint(auth.blueprint)
         app.register_blueprint(signup.blueprint)
+
+        # Setup rich menu
+        RichMenu.initMenu(linebot)
 
         return app

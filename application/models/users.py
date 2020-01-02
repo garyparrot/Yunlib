@@ -1,4 +1,5 @@
 from .. import db
+from .. import linebot
 
 class UserStatus:
     requireVerify = "requireVerify"
@@ -12,5 +13,10 @@ class User(db.Model):
     verify_code  = db.Column(db.String(16), unique=True,  nullable=True)
     verify_due   = db.Column(db.DateTime,   unique=False, nullable=True)
 
+    def linkRichMenu(self, index = 0):
+        menu_id = linebot.get_rich_menu_list()[index]
+        linebot.link_rich_menu_to_user(self.userid, menu_id)
+
     def __repr__(self):
         return f"<User ${self.userid}>"
+
