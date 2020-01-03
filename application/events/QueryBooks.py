@@ -8,8 +8,8 @@ from ..crawlers.QueryBooks import BookQuery, crawler, BookDetail, bookDetailCraw
 def checkEvent(args):
     return args.message.text.startswith("搜尋")
 
-isQuerybook  = lambda postback: postback["type"] == "querybook"
-isBookdetail = lambda postback: postback["type"] == "bookdetail"
+isQuerybook  = lambda postback: postback.get("type","") == "querybook"
+isBookdetail = lambda postback: postback.get("type","") == "bookdetail"
 
 def checkPostback(args):
     postback = json.loads(args.postback.data)

@@ -1,3 +1,4 @@
+import json
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 from .. import linebot, webhook
 from ..linemodels.booklist import MyBooklistRender, config as renderConfig
@@ -11,10 +12,18 @@ def checkEvent(args):
     return args.message.text.startswith("查詢我借的書")
 
 def handleEvent(args):
-
-    # Query user info
-    print(args)
     user = User.query.filter_by(userid = args.source.user_id).first()
+    return queryUserBooks(user)
+
+# def checkPostback(args):
+#     postback = json.loads(args.postback.data)
+#     return postback["data"] == "搜尋書目"
+# 
+# def handlePostback(args):
+#     user = User.query.filter_by(userid = args.source.user_id).first()
+#     queryUserBooks(user)
+
+def queryUserBooks(user):
 
     try:
         if user:
